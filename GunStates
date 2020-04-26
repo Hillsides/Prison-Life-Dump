@@ -1,0 +1,19 @@
+local v1 = {}
+v1.Damage = 11
+v1.Description = "Remember to put a description here BEFORE the game is published -Me"
+v1.MaxAmmo = 30
+v1.CurrentAmmo = 30
+v1.StoredAmmo = 600
+v1.FireRate = 0.0875
+v1.AutoFire = true
+v1.Range = 800
+v1.Spread = 18
+v1.ReloadTime = 2
+v1.Bullets = 1
+v1.ReloadAnim = "http://www.roblox.com/asset/?id=388723916"
+v1.ShootAnim = "http://www.roblox.com/asset/?id=389472570"
+v1.HoldAnim = "http://www.roblox.com/asset/?id=388726667"
+v1.FireSoundId = "http://www.roblox.com/asset/?id=2934888536"
+v1.SecondarySoundId = nil
+v1.ReloadSoundId = "http://www.roblox.com/asset/?id=2934887229"
+return v1
