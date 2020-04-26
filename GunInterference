@@ -1,0 +1,394 @@
+--[[
+    input function was flagged as potentially incompatible.
+    please private message a developer for support.
+]]
+local v6 = game:GetService("RunService")
+local v10 = game:GetService("ReplicatedStorage")
+local v13 = game:GetService("Debris")
+local v15 = script.Parent
+local v20 = v15:WaitForChild("Muzzle")
+local v28 = ((game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Home")):WaitForChild("hud")):WaitForChild("GunFrame")
+local v31 = v28:WaitForChild("Magazine")
+local v34 = v28:WaitForChild("Label")
+local v37 = require(v15.GunStates)
+local v38 = v37.Range
+local v39 = v37.Spread
+local v41 = v6:IsClient()
+local v43 = v6:IsServer()
+local v46 = script:WaitForChild("Hold2H")
+local v49 = script:WaitForChild("Reload2H")
+local v52 = script:WaitForChild("Shoot2H")
+local v53
+local v54
+local v55
+local v58 = (v15:WaitForChild("Handle")):WaitForChild("FireSound")
+local v59 = false
+local v60 = false
+local v61
+local function setValue_1(v64, v65)
+    local v66 = "Magazine"
+    if v66 == v64 then
+        v66 = v31
+        v66.Text = v65
+        return 
+    end
+    local v67 = "Label"
+    if v67 == v64 then
+        v67 = v34
+        v67.Text = v65
+    end
+end
+local function authPlayer_1(v70)
+    local v71 = v15
+    if v71 == v70 then
+        v71 = true
+        return v71
+    end
+    return false
+end
+local function init_1()
+    v46.AnimationId = v37.HoldAnim
+    v49.AnimationId = v37.ReloadAnim
+    v52.AnimationId = v37.ShootAnim
+end
+local function playSound_1(v86)
+    local v88 = v86:Clone()
+    v88.Parent = v86.Parent
+    v88:Play()
+    v10.SoundEvent:FireServer(v86, v15)
+    v13:AddItem(v88, 5)
+end
+local function killFlare_1()
+    v17.flare.Enabled = false
+end
+local function createRay_1(v104, v105)
+    local v106 = {}
+    local v108 = v37
+    for v107 = 1, v108.Bullets, 1 do
+        local v111 = v104 - v105
+        v108 = v111.magnitude
+        local v112 = v39
+        v111 = v108 / v112
+        v112 = Vector3.new
+        local v113 = math.random
+        local v114 = -v111
+        local v115 = v111
+        local v116 = v113(v114, v115)
+        local v117 = v116 / 10
+        local v118 = math.random
+        local v119 = -v111
+        local v120 = v111
+        local v121 = v118(v119, v120)
+        v116 = v121 / 10
+        local v122 = math.random
+        local v123 = -v111
+        local v124 = v111
+        local v125 = v122(v123, v124)
+        v121 = v125 / 10
+        local v126 = v112(v117, v116, v121)
+        local v127 = Ray.new
+        local v128 = v104
+        local v129 = v105 + v126
+        local v130 = v129 - v104
+        v125 = v130.unit
+        v130 = v38
+        local v131 = v125 * v130
+        local v132 = v127(v128, v131)
+        local v133 = workspace
+        v125 = v132
+        v129 = v7
+        v130 = v129.Character
+        local v134, v135 = v133:FindPartOnRay(v125, v130)
+        local v136 = v134
+        if v136 then
+            v136 = v134.Parent
+        end
+        local v137 = v20
+        local v138 = v137.Position
+        v129 = v135 - v138
+        local v139 = v129.magnitude
+        v129 = Instance.new
+        v138 = "Part"
+        v137 = v15
+        local v140 = v129(v138, v137)
+        local v141 = Instance.new
+        local v142 = "BlockMesh"
+        local v143 = v140
+        local v144 = v141(v142, v143)
+        local v145 = Vector3.new
+        local v146 = 0.5
+        local v147 = 0.5
+        local v148 = 1
+        local v149 = v145(v146, v147, v148)
+        v144.Scale = v149
+        v149 = "RayPart"
+        v140.Name = v149
+        v149 = BrickColor.Yellow
+        local v150 = v149()
+        v140.BrickColor = v150
+        v150 = Enum.Material.Neon
+        v140.Material = v150
+        v150 = true
+        v140.Anchored = v150
+        v150 = false
+        v140.CanCollide = v150
+        v150 = 0.5
+        v140.Transparency = v150
+        v150 = Enum.FormFactor.Custom
+        v140.formFactor = v150
+        v150 = Vector3.new
+        local v151 = 0.2
+        local v152 = 0.2
+        local v153 = v139
+        local v154 = v150(v151, v152, v153)
+        v140.Size = v154
+        local v155 = CFrame.new
+        local v156 = v135
+        local v157 = v20
+        local v158 = v157.Position
+        local v159 = v155(v156, v158)
+        local v160 = CFrame.new
+        local v161 = 0
+        v157 = 0
+        local v162 = -v139
+        local v163 = v162 / 2
+        local v164 = v160(v161, v157, v163)
+        v154 = v159 * v164
+        v140.CFrame = v154
+        v159 = v17
+        v154 = v159.flare
+        v159 = true
+        v154.Enabled = v159
+        v154 = delay
+        v159 = 0.05
+        v164 = killFlare_1
+        v154(v159, v164)
+        local v165 = v13
+        local v166 = v140
+        local v167 = 0.05
+        v165:AddItem(v166, v167)
+        local v168 = table.insert
+        local v169 = v106
+        local v170 = {}
+        v170.Hit = v134
+        v170.Distance = v139
+        local v171 = v140.CFrame
+        v170.Cframe = v171
+        v170.RayObject = v132
+        v168(v169, v170)
+    end
+    return v106
+end
+local function reloadGun_1()
+    local v174 = true
+    v59 = v174
+    v174 = v7.Character.Humanoid
+    local v177 = v174:LoadAnimation(v49)
+    v54 = v177
+    v177 = v54
+    v177:Play()
+    v10.ReloadEvent:FireServer(v15)
+    playSound_1(v17.ReloadSound)
+    setValue_1("Label", "RELOADING")
+    local v185 = v37
+    wait(v185.ReloadTime)
+    local v187 = v41
+    if v187 then
+        v187 = v43
+        if not v187 then
+            v187 = v37
+            v185 = v37
+            local v188 = v185.MaxAmmo
+            v187.CurrentAmmo = v188
+        end
+    end
+    local v195 = v61
+    if v195 then
+        v195 = setValue_1
+        v188 = "Label"
+        local v189 = v15
+        v185 = v189.Name
+        v195(v188, v185)
+    end
+    local v190 = false
+    v59 = v190
+end
+local function GunEquipped_1(v198)
+    local v199 = true
+    v61 = v199
+    v199 = v10.EquipEvent
+    v199:FireServer(v15)
+    local v204 = v7.Character.Humanoid:LoadAnimation(v46)
+    v53 = v204
+    v204 = v53
+    v204:Play()
+    v198.Icon = "http://www.roblox.com/asset/?id=426730675"
+    local function v206()
+        local v207 = true
+        v60 = v207
+        v207 = v59
+        if not v207 then
+            v207 = true
+            v59 = v207
+            while true do
+                v207 = v60
+                if v207 then
+                    break
+                end
+                local v208 = v37
+                v207 = v208.CurrentAmmo
+                v208 = 0
+                if v207 > v208 then
+                    break
+                end
+                v207 = v61
+                if v207 then
+                    break
+                end
+                v207 = createRay_1
+                local v209 = v7
+                local v210 = v209.Character
+                local v211 = v210.Head
+                v208 = v211.Position
+                v209 = v198
+                v210 = v209.Hit
+                v211 = v210.p
+                local v212 = v207(v208, v211)
+                local v213 = v10
+                local v214 = v213.ShootEvent
+                v210 = v212
+                v209 = v15
+                v214:FireServer(v210, v209)
+                local v215 = playSound_1
+                local v216 = v17
+                v213 = v216.FireSound
+                v215(v213)
+                local v217 = v37
+                local v218 = v217.SecondarySoundId
+                if v218 then
+                    v218 = delay
+                    v217 = 0.2
+                    v216 = function()
+                        playSound_1(v17.SecondarySound)
+                    end
+                    v218(v217, v216)
+                end
+                local v222 = v7
+                local v223 = v222.Character
+                local v224 = v223.Humanoid
+                v222 = v52
+                local v225 = v224:LoadAnimation(v222)
+                v225:Play()
+                local v226 = v41
+                if v226 then
+                    v226 = v43
+                    if not v226 then
+                        v226 = v37
+                        local v227 = v37
+                        local v228 = v227.CurrentAmmo
+                        local v229 = v228 - 1
+                        v226.CurrentAmmo = v229
+                    end
+                end
+                v226 = wait
+                v228 = v37
+                v229 = v228.FireRate
+                local v230 = v226(v229)
+                v228 = v37
+                local v231 = v228.AutoFire
+                if v231 then
+                    break
+                end
+            end
+            v212 = false
+            v59 = v212
+        end
+    end
+    v198.Button1Down:connect(v206)
+    local function v233()
+        local v234 = false
+        v60 = v234
+    end
+    v198.Button1Up:connect(v233)
+    local function v236(v237)
+        if not v59 then
+            local v239 = v237:lower()
+            local v240 = "r"
+            if v240 == v239 then
+                v239 = reloadGun_1
+                v239()
+            end
+        end
+    end
+    v198.KeyDown:connect(v236)
+    local function v242()
+    end
+    v198.Move:connect(v242)
+    v28.Visible = true
+    setValue_1("Magazine", v37.CurrentAmmo .. "/" .. v37.MaxAmmo)
+    setValue_1("Label", v15.Name)
+end
+local function GunUnequipped_1()
+    local v262 = false
+    v61 = v262
+    v262 = v10.UnequipEvent
+    v262:FireServer(v15)
+    v28.Visible = false
+    local v268 = v53
+    if v268 then
+        v268 = v53
+        v268:Stop()
+    end
+    local v266 = v54
+    if v266 then
+        v266 = v54
+        v266:Stop()
+    end
+end
+v15.Equipped:connect(GunEquipped_1)
+v15.Unequipped:connect(GunUnequipped_1)
+local v275 = v10:WaitForChild("UpdateEvent")
+local function v277(v278, v279)
+    if v279 then
+        local v280 = v15
+        if v280 == v279 then
+            v280 = v61
+            if v280 then
+                v280 = setValue_1
+                local v281 = "Magazine"
+                local v282 = v37
+                local v283 = v282.CurrentAmmo
+                local v284 = "/"
+                v282 = v37
+                local v285 = v282.MaxAmmo
+                local v286 = v283 .. v284 .. v285
+                v280(v281, v286)
+                local v287 = setValue_1
+                local v288 = "Label"
+                local v289 = v279.Name
+                v287(v288, v289)
+            end
+        end
+    end
+end
+v275.OnClientEvent:connect(v277)
+local v292 = v10:findFirstChild("touchReload")
+if not v292 then
+    v292 = Instance.new
+    v275 = "BindableEvent"
+    local v293 = v10
+    local v294 = v292(v275, v293)
+end
+v294.Name = "touchReload"
+local function v296()
+    local v297 = v61
+    if v297 then
+        v297 = v59
+        if not v297 then
+            v297 = reloadGun_1
+            v297()
+        end
+    end
+end
+v294.Event:connect(v296)
+init_1()
